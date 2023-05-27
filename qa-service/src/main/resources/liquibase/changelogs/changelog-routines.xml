@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+	<changeSet id="Requirement Nr: 10585332 - Create pts_ticket_import table" author="ZSE" dbms="mysql" >
+        <sqlFile endDelimiter="\$\$" stripComments="true" path="../sql/pts_ticket_import.sql" relativeToChangelogFile="true"/>
+	</changeSet>
+	<!-- Export procedures creation -->	
+	<changeSet id="Requirement Nr: 10585332 - export install script" author="ZSE" dbms="mysql" runOnChange='true'>
+		<sqlFile endDelimiter="\$\$" path="../sql/export_install.sql" relativeToChangelogFile="true"/>
+	</changeSet>
+	<changeSet id="Requirement Nr: 10585332 - export problem script" author="ZSE" dbms="mysql" runOnChange='true'>
+		<sqlFile endDelimiter="\$\$" path="../sql/export_problem.sql" relativeToChangelogFile="true"/>
+	</changeSet>	
+	<changeSet id="Requirement Nr: 10585332 - export ticket script" author="ZSE" dbms="mysql" runOnChange='true'>
+		<sqlFile endDelimiter="\$\$" path="../sql/export_ticket.sql" relativeToChangelogFile="true"/>
+	</changeSet>
+	<changeSet id="Requirement Nr: 10585332 - export us_test_case script" author="ZSE" dbms="mysql" runOnChange='true'>
+		<sqlFile endDelimiter="\$\$" path="../sql/export_us_test_case.sql" relativeToChangelogFile="true"/>
+	</changeSet>	
+	<changeSet id="Requirement Nr: 10585332 - export schedule script" author="ZSE" dbms="mysql" runOnChange='true'>
+		<sqlFile endDelimiter="\$\$" path="../sql/data_export.sql" relativeToChangelogFile="true"/>
+	</changeSet>
+	
+</databaseChangeLog>

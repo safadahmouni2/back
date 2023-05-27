@@ -1,0 +1,6 @@
+package com.thinktank.pts.qaservice.enums;
+
+public enum InstallState {
+
+	OPEN, CREATED, ANALYSED, PLANNED, IN_PROGRESS, INSTALLED, ABORTED, SUSPENDED, INTEGRATED_BY_PRODUCT, INTEGRATED_ALL, DONE
+}

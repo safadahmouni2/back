@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+	<changeSet
+		id="Requirement Nr:10544243 change sprint id to target sprint id in Problem table"
+		author="PTS_DevTeam">
+		<renameColumn columnDataType="BIGINT(19)"
+			newColumnName="target_sprint_id" oldColumnName="sprint_id"
+			tableName="Problem" />
+	</changeSet>
+
+	<changeSet
+		id="Requirement Nr:10544243 change sprint id to target sprint id in Ticket table"
+		author="PTS_DevTeam">
+		<renameColumn columnDataType="BIGINT(19)"
+			newColumnName="target_sprint_id" oldColumnName="sprint_id"
+			tableName="Ticket" />
+	</changeSet>
+
+	<changeSet
+		id="Requirement Nr:10544243 change sprint id to target sprint id in Install table"
+		author="PTS_DevTeam">
+		<renameColumn columnDataType="BIGINT(19)"
+			newColumnName="target_sprint_id" oldColumnName="sprint_id"
+			tableName="Install" />
+	</changeSet>
+	
+	<changeSet
+		id="Requirement Nr:10544291 add origin sprint id to Test"
+		author="PTS_DevTeam">
+		<addColumn tableName="Test">
+			<column name="origin_sprint_id" type="BIGINT(19)"
+				defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+		<update tableName="Test">
+			<column name="origin_sprint_id" value="0" />
+			<where> origin_sprint_id = null</where>
+		</update>
+	</changeSet>
+	
+	<changeSet
+		id="Requirement Nr: 10544302 add origin sprint id to Problem"
+		author="PTS_DevTeam">
+		<addColumn tableName="Problem">
+			<column name="origin_sprint_id" type="BIGINT(19)"
+				defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+		<update tableName="Problem">
+			<column name="origin_sprint_id" value="0" />
+			<where> origin_sprint_id = null</where>
+		</update>
+	</changeSet>
+
+	<changeSet
+		id="Requirement Nr: 10544302 add origin sprint id to Ticket"
+		author="PTS_DevTeam">
+		<addColumn tableName="Ticket">
+			<column name="origin_sprint_id" type="BIGINT(19)"
+				defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+		<update tableName="Ticket">
+			<column name="origin_sprint_id" value="0" />
+			<where> origin_sprint_id = null</where>
+		</update>
+	</changeSet>
+
+	<changeSet
+		id="Requirement Nr: 10544302 add user story id to Install"
+		author="PTS_DevTeam">
+		<addColumn tableName="Install">
+			<column name="user_story_id" type="BIGINT(19)"
+				defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+		<update tableName="Install">
+			<column name="user_story_id" value="0" />
+			<where> user_story_id = null</where>
+		</update>
+	</changeSet>
+	
+	<changeSet
+		id="Requirement Nr: 10547884 add column library test step id in test_step"
+		author="PTS_DevTeam">
+		<addColumn tableName="test_step">
+			<column name="test_step_library_id" type="BIGINT(19)"
+				defaultValue="0">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet
+		id="Requirement Nr: 10548151 add column library test step id in us_test_step"
+		author="PTS_DevTeam">
+		<addColumn tableName="us_test_step">
+			<column name="test_step_library_id" type="BIGINT(19)"
+				defaultValue="0">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet author="PTS_DevTeam"
+		id=" Requirement Nr: 10547029 Create-Table-library_test_case_history">
+		<createTable tableName="library_test_case_history">
+			<column name="id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_library_test_case_history_id" />
+			</column>
+			<column name="library_test_case_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+			<column name="test_case_version" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="category" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="effort" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="execution_estimation_time" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="pre_condition" type="LONGTEXT">
+				<constraints nullable="true" />
+			</column>
+			<column name="product_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="short_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="state" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="folder_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet author="PTS_DevTeam"
+		id=" Requirement Nr: 10547546  Create-Table-library_test_step_history">
+		<createTable tableName="library_test_step_history">
+			<column name="id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_library_test_step_history_id" />
+			</column>
+			<column name="library_test_step_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+			<column name="library_test_case_history_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+			
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="step_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="expected_result" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="step_order" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+<changeSet author="PTS_DevTeam" id="Requirement Nr: 10547021 Create-Table-Document-test.">
+		<createTable tableName="document_test">
+			<column name="id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_document_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT">
+				<constraints nullable="true" />
+			</column>
+			<column name="file_name" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="type" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="short_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="upload_date" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="data" type="blob">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet author="PTS_DevTeam." id="Requirement Nr: 10547021 Create-Table-Document-test-case-library..">
+		<createTable tableName="document_test_case_library">
+			<column name="id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_document_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT">
+				<constraints nullable="true" />
+			</column>
+			<column name="file_name" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="type" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="short_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="upload_date" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="data" type="blob">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_case_library_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+    <changeSet author="PTS_DevTeam" id="Requirement Nr: 10547021 create foreignkey for document test">
+		<addForeignKeyConstraint
+			baseTableName="document_test" baseColumnNames="test_id"
+			constraintName="fk__document_test_test_id" referencedTableName="test"
+			referencedColumnNames="test_id" onDelete="CASCADE" />
+	</changeSet>
+	
+	<changeSet author="PTS_DevTeam." id="Requirement Nr: 10547021 create foreignkey for document test case library">
+		<addForeignKeyConstraint
+			baseTableName="document_test_case_library" baseColumnNames="test_case_library_id"
+			constraintName="fk__document_test_test_case_library_id" referencedTableName="library_test_case"
+			referencedColumnNames="test_case_library_id" onDelete="CASCADE" />
+	</changeSet>
+	<changeSet
+			id="Requirement Nr: 10548503 Add column PARENT_FOLDER_REF_ID in table Folder"
+			author="PTS_DevTeam">
+		<addColumn tableName="folder">
+			<column name="PARENT_FOLDER_REF_ID" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
+
+    <changeSet  author="PTS_DevTeam."  id="modifyDataType of column data of table document test case data base">  
+       <modifyDataType  
+            columnName="data"  
+            newDataType="LONGBLOB"  
+            tableName="document_test_case_library"/>  
+    </changeSet>
+
+    <changeSet  author="PTS_DevTeam."  id="modifyDataType of column data of table document test">  
+      <modifyDataType  
+            columnName="data"  
+            newDataType="LONGBLOB"  
+            tableName="document_test"/>  
+    </changeSet>
+
+    <changeSet  author="PTS_DevTeam."  id="rename table document_test_case_library">  
+      <renameTable  
+            newTableName="library_test_case_attachment"  
+            oldTableName="document_test_case_library"/>  
+   </changeSet>
+   
+   <changeSet  author="PTS_DevTeam."  id="rename table document_test">  
+      <renameTable  
+            newTableName="test_attachment"  
+            oldTableName="document_test"/>  
+   </changeSet>
+
+</databaseChangeLog>
+

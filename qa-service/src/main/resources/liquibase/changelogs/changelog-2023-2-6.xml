@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+	<changeSet
+		id="Requirement Nr:10559612  Add constraint STATE not null for test case library"
+		author="PTS_DevTeam">
+		<update tableName="LIBRARY_TEST_CASE">
+			<column name="state" value="CREATED" />
+			<where> state = null</where>
+		</update>
+
+		<addNotNullConstraint columnDataType="LONGTEXT"
+			columnName="state"
+			constraintName="test_case_library_state_constraint"
+			defaultNullValue="CREATED" tableName="LIBRARY_TEST_CASE" />
+	</changeSet>
+
+	<changeSet
+		id="Requirement Nr 10559904 :Add constraint short description not null for test case library "
+		author="PTS_DevTeam">
+		<update tableName="LIBRARY_TEST_CASE">
+			<column name="short_description" type="VARCHAR(255)" />
+			<where> short_description = null</where>
+		</update>
+
+		<addNotNullConstraint columnDataType="LONGTEXT"
+			columnName="short_description"
+			constraintName="test_case_library_short_description_constraint"
+			tableName="LIBRARY_TEST_CASE" />
+	</changeSet>
+
+</databaseChangeLog>

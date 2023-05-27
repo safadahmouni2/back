@@ -1,0 +1,432 @@
+openapi: 3.0.3
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+info:
+  version: 2023-2-7-3
+  title: PTS QA API
+paths:
+  /library-test-cases:
+    get:
+      summary: Retrieve test cases from the library
+      operationId: getTestCasesLibrary
+      tags:
+      - testCaseLibrary
+      parameters:
+      - in: query
+        name: shortDescription
+        schema:
+          type: string
+        description: Short description of the test case
+      - in: query
+        name: testCaseLibraryId
+        schema:
+          type: string
+        description: ID of the test case library to search for
+      - in: query
+        name: folderId
+        schema:
+          type: integer
+        description: ID of the folder containing the test cases
+      - in: query
+        name: productId
+        schema:
+          type: integer
+        description: ID of the product associated with the test cases
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TestCaseLibraryDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+                         
+  /folders/subFolder/{parentFolderRefId}:
+    get:
+      summary: get folders from folder parent
+      parameters:
+      - name: parentFolderRefId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FolderDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderDTO'
+                               
+  /folders/parent/{parentId}:
+    get:
+      summary: get folders from product
+      parameters:
+      - name: parentId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FolderDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FolderDTO'
+                            
+  /test-cases-library/export/product/{productId}:
+    get:
+      summary: Export product of Test Cases in Library
+      parameters:
+      - in: path
+        name: productId
+        required: true
+        schema:
+          type: integer
+        description: Product Id of exported  test cases
+      responses:
+        '200':
+          description: Folder exported successfully
+          content:
+            application/vnd.ms-excel:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+                             
+  /test-cases-library/export/folder/{folderId}:
+    get:
+      summary: Export Folder of Test Cases in Library
+      parameters:
+      - in: path
+        name: folderId
+        required: true
+        schema:
+          type: integer
+        description: folderId of exported  test cases
+      - in: query
+        name: folderName
+        required: true
+        schema:
+          type: string
+        description: folderName
+      responses:
+        '200':
+          description: Folder exported successfully
+          content:
+            application/vnd.ms-excel:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+                              
+  /test-cases-library/importExcel/{productId}:
+    post:
+      summary: Export Folder of Test Cases in Library
+      parameters:
+        - name: productId
+          in: "path"
+          required: true
+          schema:
+            type: integer
+        - name: userCode
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File imported successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Could not import File !
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+  /folders:
+    post:
+      tags:
+      - folder-controller
+      operationId: addFolder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FolderDTO'
+        required: true
+      responses:
+        200:
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/FolderDTO'
+
+  /finish-test-efforts/{id}:
+    put:
+      summary: Finish a test effort
+      description: Finish a test effort by providing the test effort ID and the user code in the request header
+      operationId: finishTestEffort
+      tags:
+      - testEffort
+      parameters:
+        - name: id
+          in: path
+          description: ID of the test effort to be finished
+          required: true
+          schema:
+            type: integer
+        - name: userCode
+          in: header
+          description: User code for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Test effort data to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestEffortDTO'
+      responses:
+        '201':
+          description: Test effort updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '400':
+          description: Invalid input data or operation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+        '403':
+          description: Forbidden request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseMessage'
+
+  /source-system:
+    post:
+      tags:
+        - SourceSystemController
+      summary: Add source system for test case in Library
+      operationId: addSourceSystem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceSystemDTO'
+        required: true
+      responses:
+        200:
+          description: default response
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SourceSystemDTO'
+
+  /source-systems:
+    get:
+      tags:
+        - SourceSystemController
+      summary: Get all source system in Library
+      operationId: getAllSourceSystems
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SourceSystemDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceSystemDTO'
+
+  /source-systems/{sourceSystemName}:
+    get:
+      tags:
+        - SourceSystemController
+      summary: get source system from test case library
+      operationId: getSourceSystemByName
+      parameters:
+        - name: sourceSystemName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SourceSystemDTO'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceSystemDTO'
+
+components:
+  schemas:
+    TestCaseLibraryDTO:
+      type: object
+      properties:
+        testCaseLibraryId:
+          type: integer
+        shortDescription:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        state:
+          $ref: '#/components/schemas/TestCaseState'
+        preCondition:
+          type: string
+        effort:
+          type: number
+          format: float
+        executionEstimationTime:
+          type: number
+          format: float
+        folder:
+          $ref: '#/components/schemas/FolderDTO'
+        productId:
+          type: integer
+        modified:
+          type: string
+          format: date-time
+        modifier:
+          type: string
+        testCaseVersion:
+          type: integer
+      required:
+      - testCaseLibraryId
+      - shortDescription
+      - folder
+      - productId
+      - testCaseVersion
+      
+    FolderDTO:
+      type: object
+      properties:
+        folderId:
+          type: integer
+        name:
+          type: string
+        parentId:
+          type: integer
+        folderPath:
+          type: string
+        parentFolderRefId:
+          type: integer
+      required:
+      - folderId
+      - name
+      - parentFolderRefId
+    TestCaseState:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+    ResponseMessage:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+      - message
+      
+    TestEffortDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID of the test effort
+        startTime:
+          type: string
+          format: time
+          description: Start time of the test effort
+        endTime:
+          type: string
+          format: time
+          description: End time of the test effort
+        date:
+          type: string
+          format: date
+          description: Start date of the test effort
+        effortByLine:
+          type: string
+          format: time
+          description: The time taken to complete a test effort
+        testId:
+          type: integer
+          description: ID of the test to which the test effort belongs
+        testRunId:
+          type: integer
+          description: ID of the test run to which the test effort belongs
+
+    SourceSystemDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        sourceSystemName:
+          type: string
+      required:
+        - sourceSystemName
+

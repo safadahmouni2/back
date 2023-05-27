@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+  <changeSet  id="Requirement 10586108: Increase sprint name column to 250 varchar" author="AKA">
+     <modifyDataType
+        columnName="name"
+        newDataType="VARCHAR(250)"
+        tableName="sprint"/>
+   </changeSet>
+
+	<changeSet id="Requirement 10585966: create meeting_config table" author="AKA">
+		<createTable tableName="meeting_config">
+	  		<column name="id" type="BIGINT(20)" autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="meet_name" type="VARCHAR(250)"/>
+			<column name="start_date" type="date"/>
+			<column name="end_date" type="date"/>
+			<column name="meet_start_time" type="time"/>
+			<column name="meet_duration" type="bigint(20)"/>
+			<column name="location" type="varchar(500)"/>
+			<column name="recurrence_type" type="VARCHAR(250)"/>
+			<column name="recurrence_number" type="BIGINT(20)"/>
+			<column name="organizer_code" type="VARCHAR(10)"/>
+			<column name="organizer_id" type="bigint(20)"/>
+			<column name="product_id" type="BIGINT(20)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="ticket_id" type="BIGINT(20)">
+				<constraints uniqueConstraintName="unique_mc_ticket_id"/>
+			</column>
+			<column name="parent_ticket_id" type="BIGINT(20)"/>
+			<column name="meet_type" type="VARCHAR(250)"/>
+			
+			<!--STANDARD TECHNICAL COLUMNS -->
+			<column name="creator" type="VARCHAR(250)"/>
+			<column name="created" type="DATETIME"><constraints nullable="false" /></column>
+			<column name="modifier" type="VARCHAR(250)"/>
+			<column name="modified" type="DATETIME"><constraints nullable="false" /></column>
+			<column name="version" type="INTEGER" defaultValue="0"><constraints nullable="false" /></column>
+		</createTable>
+	  	<modifySql dbms="mysql">
+     		<append value="ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
+	  	</modifySql>
+	</changeSet>
+	
+	<changeSet id="Requirement 10585968: create meeting_attendee table" author="AKA">
+		<createTable tableName="meeting_attendee">
+	  		<column name="id" type="BIGINT(20)" autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="user_code" type="VARCHAR(10)"/>
+			<column name="user_id" type="bigint(20)"/>
+			<column name="is_required" type="date"/>
+			<column name="role" type="varchar(100)"/>
+			<column name="product_id" type="BIGINT(20)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="ticket_id" type="BIGINT(20)">
+				<constraints uniqueConstraintName="unique_ma_ticket_id"/>
+			</column>
+
+			<column name="meeting_config_id" type="BIGINT(20)">
+               <constraints nullable="false" foreignKeyName="fk_meet_attendee_config_id" references="meeting_config(id)"/>
+            </column>
+			
+			<!--STANDARD TECHNICAL COLUMNS -->
+			<column name="creator" type="VARCHAR(250)"/>
+			<column name="created" type="DATETIME"><constraints nullable="false" /></column>
+			<column name="modifier" type="VARCHAR(250)"/>
+			<column name="modified" type="DATETIME"><constraints nullable="false" /></column>
+			<column name="version" type="INTEGER" defaultValue="0"><constraints nullable="false" /></column>
+		</createTable>
+	  	<modifySql dbms="mysql">
+     		<append value="ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
+	  	</modifySql>
+	</changeSet>
+	
+	<changeSet id="Requirement 10585968: change is_required to boolean" author="AKA">
+		<modifyDataType  
+            columnName="is_required"  
+            newDataType="boolean" 
+            tableName="meeting_attendee"/>  
+	</changeSet>
+		
+	<changeSet id="Requirement 10585968: add meeting_config to meeting_config" author="AKA">
+		<addColumn tableName="meeting_config">
+			<column name="parent_type" type="VARCHAR(250)" />
+		</addColumn>
+	</changeSet>		
+	
+	<changeSet id="Requirement 10586336: create meeting table" author="AKA">
+		<createTable tableName="meeting">
+	  		<column name="id" type="BIGINT(20)" autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+            <column name="product_id" type="BIGINT(20)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="ticket_id" type="BIGINT(20)">
+				<constraints uniqueConstraintName="unique_meeting_ticket_id"/>
+			</column>
+			<column name="state_id" type="BIGINT(20)" />
+			<column name="started_at" type="datetime" />
+			<column name="finished_at" type="datetime" />
+			<column name="meet_name" type="VARCHAR(250)"/>
+			<column name="estimated_start_date" type="date"/>
+			<column name="estimated_end_date" type="date"/>
+			<column name="estimated_meet_start_time" type="time"/>
+			<column name="estimated_meet_duration" type="bigint(20)"/>
+			<column name="location" type="varchar(500)"/>
+			<column name="recurrence_type" type="VARCHAR(250)"/>
+			<column name="recurrence_number" type="BIGINT(20)"/>
+			<column name="organizer_code" type="VARCHAR(10)"/>
+			<column name="organizer_id" type="bigint(20)"/>
+	
+			<column name="parent_ticket_id" type="BIGINT(20)"/>
+			<column name="parent_type" type="VARCHAR(250)" />
+			<column name="meet_type" type="VARCHAR(250)"/>
+
+			<!--STANDARD TECHNICAL COLUMNS -->
+			<column name="creator" type="VARCHAR(250)"/>
+			<column name="created" type="DATETIME"><constraints nullable="false" /></column>
+			<column name="modifier" type="VARCHAR(250)"/>
+			<column name="modified" type="DATETIME"><constraints nullable="false" /></column>
+			<column name="version" type="INTEGER" defaultValue="0"><constraints nullable="false" /></column>
+		</createTable>
+	  	<modifySql dbms="mysql">
+     		<append value="ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
+	  	</modifySql>
+	</changeSet>
+	
+	<changeSet id="Requirement 10586336: add meeting_config_id to meeting" author="AKA">
+		<addColumn tableName="meeting">
+			<column name="meeting_config_id" type="BIGINT(20)">
+               <constraints nullable="true" foreignKeyName="fk_meet__meetconfig_id" references="meeting_config(id)"/>
+            </column>		
+		</addColumn>
+	</changeSet>	
+
+	<changeSet id="Requirement 10585968: add state_id to meeting_attendee" author="AKA">
+		<addColumn tableName="meeting_attendee">
+			<column name="state_id" type="BIGINT(20)" />		
+		</addColumn>
+	</changeSet>	
+	
+	<changeSet id="Requirement 10586338: create meeting_participant table" author="AKA">
+		<createTable tableName="meeting_participant">
+	  		<column name="id" type="BIGINT(20)" autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="state_id" type="BIGINT(20)" />
+			<column name="user_code" type="VARCHAR(10)"/>
+			<column name="user_id" type="bigint(20)"/>
+			<column name="role" type="varchar(100)"/>
+			<column name="joined_at" type="datetime" />
+			<column name="left_at" type="datetime" />
+			
+			<column name="product_id" type="BIGINT(20)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="ticket_id" type="BIGINT(20)">
+				<constraints uniqueConstraintName="unique_ma_ticket_id"/>
+			</column>
+
+			<column name="meeting_id" type="BIGINT(20)">
+               <constraints nullable="false" foreignKeyName="fk_participant_meet_config_id" references="meeting(id)"/>
+            </column>
+			
+			<!--STANDARD TECHNICAL COLUMNS -->
+			<column name="creator" type="VARCHAR(250)"/>
+			<column name="created" type="DATETIME"><constraints nullable="false" /></column>
+			<column name="modifier" type="VARCHAR(250)"/>
+			<column name="modified" type="DATETIME"><constraints nullable="false" /></column>
+			<column name="version" type="INTEGER" defaultValue="0"><constraints nullable="false" /></column>
+		</createTable>
+	  	<modifySql dbms="mysql">
+     		<append value="ENGINE=INNODB CHARSET=UTF8 COLLATE utf8_general_ci"/>
+	  	</modifySql>
+	</changeSet>
+	<changeSet id="Requirement Nr: 10586927 : Add columns in table DAILY_SCRUM : change in liquibase and in entity" author="BHJ">
+	  <addColumn tableName="daily_scrum">
+		<column name="total_points_in_sprint" type="INTEGER"></column>
+		<column name="completed_points" type="decimal(20,2)"></column>	
+		<column name="total_ideal_line_points" type="decimal(20,2)"></column>	
+		<column name="remaining_points" type="decimal(20,2)"></column>
+		<column name="number_days_by_sprint" type="INTEGER"></column>				
+	   </addColumn>
+	</changeSet>
+	
+	<changeSet id="Requirement 10586336: remove ForeignKeyConstraint from meeting " author="AKA">
+		<dropForeignKeyConstraint 
+            baseTableName="meeting"   
+            constraintName="fk_meet__meetconfig_id"/>  
+	</changeSet>			
+</databaseChangeLog>

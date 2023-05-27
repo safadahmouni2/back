@@ -1,0 +1,26 @@
+enum DailyScrumStatusInfo {
+  NOT_DONE
+  PLANNED
+  NOW
+  DONE
+  DONE_EARLIER
+}
+enum MeetingParentTypeEnum {
+  SPRINT
+  USER_STORY
+}
+enum MeetingRecurrenceTypeEnum {
+  DAILY
+  WEEKLY
+  MONTHLY
+  SINGLE
+  YEARLY
+}
+enum MeetingTypeEnum {
+  RETROSPECTIVE
+  REVIEW
+  PLANNING
+  DAILY_SCRUM
+  REFINEMENT
+  GROOMING
+}

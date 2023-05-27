@@ -1,0 +1,5 @@
+8061 service-registry
+8087 api-gateway
+
+8091 agile-service
+8092 qa-service

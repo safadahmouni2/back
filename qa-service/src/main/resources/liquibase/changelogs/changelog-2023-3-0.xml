@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="Problem Nr: 10567465 drop constraint fk_Library_test_step_test_id" author="PTS_DevTeam">
+		<preConditions onFail="MARK_RAN">
+	        <foreignKeyConstraintExists foreignKeyName="fk_Library_test_step_test_id"/>
+	    </preConditions>
+	    <comment>Drop FK fk_Library_test_step_test_id</comment>
+	    <dropForeignKeyConstraint baseTableName="LIBRARY_TEST_STEP" constraintName="fk_Library_test_step_test_id"/>
+	</changeSet>
+	<changeSet id="Problem Nr: 10567465 drop column LIBRARY_TEST_STEP.TEST_ID" author="PTS_DevTeam">
+		<dropColumn tableName="LIBRARY_TEST_STEP" columnName="TEST_ID" />
+	</changeSet>
+
+	<changeSet id="Problem Nr: 10568218: use same data type for library_test_case, test, test_case_changes" author="ZSE">
+		<modifyDataType  tableName="library_test_case" columnName="short_description" newDataType="VARCHAR(255) NOT NULL"/>
+		<modifyDataType  tableName="library_test_case" columnName="state" newDataType="VARCHAR(255) NOT NULL"/>
+		<modifyDataType  tableName="test" columnName="short_description" newDataType="VARCHAR(255)"/>
+		<modifyDataType  tableName="test_case_changes" columnName="short_description" newDataType="VARCHAR(255)"/>
+		<modifyDataType  tableName="test" columnName="pre_condition" newDataType="LONGTEXT"/>
+		<modifyDataType  tableName="test_case_changes" columnName="pre_condition" newDataType="LONGTEXT"/>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam"
+		id="Requirement :: 10566152  Create Table SOURCE_SYSTEM">
+		<createTable tableName="source_system">
+			<column name="source_system_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true" nullable="false"
+					primaryKeyName="pk_source_system_id" />
+			</column>
+			<column name="source_system_name" type="VARCHAR(255)">
+				<constraints nullable="false" unique="true"
+					uniqueConstraintName="UNC_source_system_source_system_name" />
+			</column>
+			<column name="created"  type="DATETIME" />
+			<column name="creator"  type="VARCHAR(255)" />
+			<column name="modified" type="DATETIME" />
+			<column name="modifier" type="VARCHAR(255)" />
+			<column name="version"  type="INT(10)" />
+		</createTable>
+	</changeSet>
+
+	<changeSet
+		id="Requirement :: 10568338 Insert default value into source system table"
+		author="PTS_DevTeam">
+		<insert tableName="source_system">
+			<column name="source_system_id" value="1" />
+			<column name="source_system_name" value="PTS_QA" />
+			<column name="modifier" value="HAT" />
+			<column name="creator" value="HAT" />
+			<column name="created" value="now()" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+
+	<changeSet
+		id="Requirement :: 10566463 : Add source system id column to LIBRARY TEST CASE table"
+		author="PTS_DevTeam">
+		<addColumn tableName="LIBRARY_TEST_CASE">
+			<column name="source_system_id" type="BIGINT(19)" defaultValue="1">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet author="PTS_DevTeam"
+		id="Requirement Nr 10568476 ::  Add foreign Key source_system_id to LIBRARY_TEST_CASE table ">
+		<addForeignKeyConstraint
+			baseTableName="LIBRARY_TEST_CASE" baseColumnNames="source_system_id"
+			constraintName="FK_library_test_case_source_system_id"
+			referencedTableName="source_system"
+			referencedColumnNames="source_system_id" />
+	</changeSet>
+
+    <changeSet id="Requirement Nr: 10565228 :: delete test case library" author="MTA">
+       <dropForeignKeyConstraint baseTableName="test_step" constraintName="fk_test_step_test_case_library_id"/>
+       <addForeignKeyConstraint
+			baseTableName="test_step" baseColumnNames="test_case_library_id"
+			constraintName="fk_test_step_test_case_library_id"
+			referencedTableName="library_test_case"
+			referencedColumnNames="test_case_library_id" onDelete="SET NULL" />
+   </changeSet>
+   
+	<changeSet id="Problem Nr: 10569045: Data too long for column step_description" author="ZSE">
+		<modifyDataType tableName="library_test_step_history" columnName="step_description" newDataType="LONGTEXT"/>
+		<modifyDataType tableName="library_test_step_history" columnName="expected_result" newDataType="LONGTEXT"/>
+	</changeSet>
+
+	<changeSet
+			id="Requirement :: 10566463 : Add column external id to LIBRARY_TEST_CASE table"
+			author="PTS_DevTeam">
+		<addColumn tableName="LIBRARY_TEST_CASE">
+			<column name="external_id" type="VARCHAR(255)"></column>
+		</addColumn>
+	</changeSet>
+
+	
+	
+   <changeSet id="Requirement Nr: 10569064 :: set null reference of test case library in test " author="MTA">
+       <dropForeignKeyConstraint baseTableName="test" constraintName="fk_test_test_case_library_id"/>
+      <addForeignKeyConstraint baseTableName="test"
+			baseColumnNames="test_case_library_id"
+			constraintName="fk_test_test_case_library_id"
+			referencedTableName="library_test_case"
+			referencedColumnNames="test_case_library_id" onDelete="SET NULL" />
+   </changeSet>
+
+	<changeSet id="Requirement Nr: 10574376 : Add project column to INSTALL table" author="ZSE">
+		<addColumn tableName="INSTALL">
+			<column name="project" type="varchar(100)" />
+		</addColumn>
+	</changeSet>
+
+ 	<changeSet id="Requirement Nr: 10574377 : Add project column to TICKET table" author="ZSE">
+		<addColumn tableName="TICKET">
+			<column name="project" type="varchar(100)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="Requirement Nr: 10574378 : Add project column to PROBLEM table" author="ZSE">
+		<addColumn tableName="PROBLEM">
+			<column name="project" type="varchar(100)" />
+		</addColumn>
+	</changeSet>	
+	<changeSet author="PTS_DevTeam" id="library_test_case_effort">
+		<createTable tableName="library_test_case_effort">
+			<column name="library_test_case_effort_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_library_test_case_effort_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="date" type="DATE(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="effort_by_line" type="TIME(8)">
+				<constraints nullable="true" />
+			</column>
+			<column name="end_time" type="TIME(8)">
+				<constraints nullable="true" />
+			</column>
+			<column name="start_time" type="TIME(8)">
+				<constraints nullable="true" />
+			</column>
+			<column name="library_test_case_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet author="PTS_DevTeam" id="Create-fk for libraryTestCaseEffort">	
+	<addForeignKeyConstraint baseTableName="library_test_case_effort"
+			baseColumnNames="library_test_case_id" constraintName="fk_library_test_case_effort_library_test_case_id"
+			referencedTableName="library_test_case" referencedColumnNames="test_case_library_id"
+			onDelete="CASCADE" />
+	</changeSet>
+
+	<changeSet id="Requirement Nr: 10576307 :: Remove effort column from LIBRARY_TEST_CASE/LIBRARY_TEST_CASE_HISTORY" author="ZSE">
+		<dropColumn tableName="LIBRARY_TEST_CASE" columnName="EFFORT" />
+		<dropColumn tableName="LIBRARY_TEST_CASE_HISTORY" columnName="EFFORT" />
+		<dropColumn tableName="US_TEST_CASE" columnName="EFFORT" />
+		<dropColumn tableName="TEST" columnName="EFFORT" />
+	</changeSet>
+
+</databaseChangeLog>

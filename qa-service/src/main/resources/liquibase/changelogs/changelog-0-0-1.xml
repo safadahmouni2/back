@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+	<changeSet author="PTS_DevTeam" id="Create-Table-folder">
+		<createTable tableName="folder">
+			<column name="folder_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_folder_folder_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT">
+				<constraints nullable="true" />
+			</column>
+			<column name="name" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="parent_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam" id="Create-Table-install">
+		<createTable tableName="install">
+			<column name="install_id" type="INT(10)" autoIncrement="true"
+				incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_install_install_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="date" type="DATE(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="env_id" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="product_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="install_version" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="requested_release" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="state" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="urgency" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam"
+		id="Create-Table-library_test_case">
+		<createTable tableName="library_test_case">
+			<column name="test_case_library_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_library_test_case_test_case_library_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="category" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="effort" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="execution_estimation_time" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="pre_condition" type="LONGTEXT">
+				<constraints nullable="true" />
+			</column>
+			<column name="product_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="short_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="state" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="folder_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam"
+		id="Create-Table-Library_test_case_test_suite">
+		<createTable tableName="Library_test_case_test_suite">
+			<column name="test_case_library_id" type="BIGINT(19)">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="PK_Library_test_case_test_suite_test_case_library_id" />
+			</column>
+			<column name="test_suite_library_id" type="BIGINT(19)">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="PK_Library_test_case_test_suite_test_suite_library_id " />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam"
+		id="Create-Table-Library_test_step">
+		<createTable tableName="Library_test_step">
+			<column name="test_step_library_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_Library_test_step_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT">
+				<constraints nullable="true" />
+			</column>
+			<column name="expected_result" type="LONGTEXT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="step_description" type="LONGTEXT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="step_order" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_step_state" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_case_library_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam" id="Create-Table-problem">
+		<createTable tableName="problem">
+			<column name="problem_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_problem_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT">
+				<constraints nullable="true" />
+			</column>
+			<column name="long_description" type="LONGTEXT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="product_name" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="short_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="urgency" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+			<column name="test_step_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam" id="Create-Table-test">
+		<createTable tableName="test">
+			<column name="test_id" type="BIGINT(19)" autoIncrement="true"
+				incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_test_test_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="category" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="effort" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="execution_estimation_time" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="pre_condition" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="short_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_case_library_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+			<column name="state" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="user_story_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_run_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam" id="Create-Table-test_effort">
+		<createTable tableName="test_effort">
+			<column name="test_effort_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_test_effort_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="date" type="DATE(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="effort_by_line" type="TIME(8)">
+				<constraints nullable="true" />
+			</column>
+			<column name="end_time" type="TIME(8)">
+				<constraints nullable="true" />
+			</column>
+			<column name="start_time" type="TIME(8)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_run_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam" id="Create-Table-test_run">
+		<createTable tableName="test_run">
+			<column name="test_run_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_test_run_test_run_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="estimated_effort" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="installed_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="short_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="state" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam" id="Create-Table-test_step">
+		<createTable tableName="test_step">
+			<column name="test_step_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_test_step_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="expected_result" type="LONGTEXT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="step_description" type="LONGTEXT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="step_order" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_step_state" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_case_library_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam" id="Create-Table-test_suite">
+		<createTable tableName="library_test_suite">
+			<column name="test_suite_library_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_test_suite_test_suite_library_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT()">
+				<constraints nullable="true" />
+			</column>
+			<column name="creation_test_run" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="estimated_effort" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="installed_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="product_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="short_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="state" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam" id="Create-Table-ticket">
+		<createTable tableName="ticket">
+			<column name="ticket_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_ticket_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="long_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="product_name" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="responsible" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="short_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="urgency" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_step_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam"
+		id="Create-Table-us_test_case">
+		<createTable tableName="us_test_case">
+			<column name="us_test_case_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_us_test_case_test_case_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="category" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="effort" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="execution_estimation_time" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="pre_condition" type="LONGTEXT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="short_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="sprint_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_case_library_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+			<column name="state" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="user_story_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="folder_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam"
+		id="Create-Table-us_test_step">
+		<createTable tableName="us_test_step">
+			<column name="us_test_step_id" type="BIGINT(19)"
+				autoIncrement="true" incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_us_test_step_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="expected_result" type="LONGTEXT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="step_description" type="LONGTEXT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="step_order" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_step_state" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="us_test_case_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+		<createTable tableName="Us_test_state">
+			<column name="Us_id" type="BIGINT(19)">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="PK_Us_test_state_Us_id" />
+			</column>
+			<column name="test_state" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam" id="Create-fk">
+		<addForeignKeyConstraint
+			baseTableName="problem" baseColumnNames="test_id"
+			constraintName="fk__problem_test_id" referencedTableName="test"
+			referencedColumnNames="test_id" onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="problem" baseColumnNames="test_step_id"
+			constraintName="fk_problem_test_step_id"
+			referencedTableName="test_step" referencedColumnNames="test_step_id"
+			onDelete="CASCADE" />
+
+		<addForeignKeyConstraint baseTableName="test"
+			baseColumnNames="test_run_id" constraintName="fk_test_test_run_id"
+			referencedTableName="test_run" referencedColumnNames="test_run_id"
+			onDelete="CASCADE" />
+
+		<addForeignKeyConstraint baseTableName="test"
+			baseColumnNames="test_case_library_id"
+			constraintName="fk_test_test_case_library_id"
+			referencedTableName="library_test_case"
+			referencedColumnNames="test_case_library_id" onDelete="CASCADE" />
+
+
+		<addForeignKeyConstraint
+			baseTableName="library_test_case" baseColumnNames="folder_id"
+			constraintName="fk_library_test_case_folder_id"
+			referencedTableName="folder" referencedColumnNames="folder_id"
+			onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="test_effort" baseColumnNames="test_id"
+			constraintName="fk_test_effort_test_id" referencedTableName="test"
+			referencedColumnNames="test_id" onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="test_effort" baseColumnNames="test_run_id"
+			constraintName="fk_test_effort_test_run_id"
+			referencedTableName="test_run" referencedColumnNames="test_run_id"
+			onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="test_step" baseColumnNames="test_case_library_id"
+			constraintName="fk_test_step_test_case_library_id"
+			referencedTableName="library_test_case"
+			referencedColumnNames="test_case_library_id" onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="test_step" baseColumnNames="test_id"
+			constraintName="fk_test_step_test_id" referencedTableName="test"
+			referencedColumnNames="test_id" onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="Library_test_step"
+			baseColumnNames="test_case_library_id"
+			constraintName="fk_Library_test_step_test_case_library_id"
+			referencedTableName="library_test_case"
+			referencedColumnNames="test_case_library_id" onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="Library_test_step" baseColumnNames="test_id"
+			constraintName="fk_Library_test_step_test_id"
+			referencedTableName="test" referencedColumnNames="test_id"
+			onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="ticket" baseColumnNames="test_id"
+			constraintName="fk_ticket_test_id" referencedTableName="test"
+			referencedColumnNames="test_id" onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="ticket" baseColumnNames="test_step_id"
+			constraintName="fk_ticket_test_step_id"
+			referencedTableName="test_step" referencedColumnNames="test_step_id"
+			onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="us_test_case" baseColumnNames="folder_id"
+			constraintName="fk_us_test_case_folder_id"
+			referencedTableName="folder" referencedColumnNames="folder_id"
+			onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="us_test_step" baseColumnNames="us_test_case_id"
+			constraintName="fk_us_test_step_test_case_id"
+			referencedTableName="us_test_case"
+			referencedColumnNames="us_test_case_id" onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="Library_test_case_test_suite"
+			baseColumnNames="test_case_library_id"
+			constraintName="fk_Library_test_case_test_suite_test_case_library_id"
+			referencedTableName="library_test_case"
+			referencedColumnNames="test_case_library_id" onDelete="CASCADE" />
+
+		<addForeignKeyConstraint
+			baseTableName="Library_test_case_test_suite"
+			baseColumnNames="test_suite_library_id"
+			constraintName="fk_Library_test_case_test_suite_test_suite_library_id"
+			referencedTableName="library_test_suite"
+			referencedColumnNames="test_suite_library_id" onDelete="CASCADE" />
+
+	</changeSet>
+
+	<changeSet author="dev_team" id="add-pts-ref-column">
+		<addColumn tableName="problem">
+			<column name="pts_ref" type="BIGINT">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+		<addColumn tableName="install">
+			<column name="pts_ref" type="BIGINT">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+		<addColumn tableName="ticket">
+			<column name="pts_ref" type="BIGINT">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+		<addColumn tableName="us_test_case">
+			<column name="pts_ref" type="BIGINT">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="dev_team" id="add-test-case-versionning">
+		<addColumn tableName="us_test_case">
+			<column name="test_case_version" type="BIGINT">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet author="dev_team" id="add-product-id-column">
+		<addColumn tableName="problem">
+			<column name="product_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="dev_team" id="add-ticket-product-id-column">
+		<addColumn tableName="ticket">
+			<column name="product_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
+	<changeSet author="dev_team" id="add-problem-user-story-id-column">
+		<addColumn tableName="problem">
+			<column name="user_story_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="dev_team" id="add-ticket-user-story-id-column">
+		<addColumn tableName="ticket">
+			<column name="user_story_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
+</databaseChangeLog>
+

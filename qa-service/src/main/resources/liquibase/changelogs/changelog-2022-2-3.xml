@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+	<changeSet id="10509552: add test case version to test run"
+		author="DEV team">
+		<addColumn tableName="TEST">
+			<column name="TEST_CASE_VERSION" type="BIGINT"
+				defaultValue="0">
+			</column>
+		</addColumn>
+		<addDefaultValue tableName="LIBRARY_TEST_CASE"
+			columnName="test_case_version" columnDataType="BIGINT"
+			defaultValue="0" />
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam"
+		id="10510998: update test case version value">
+		<update tableName="LIBRARY_TEST_CASE">
+			<column name="test_case_version" value="0" />
+			<where>test_case_version = null</where>
+		</update>
+		<update tableName="TEST">
+			<column name="TEST_CASE_VERSION" value="0" />
+			<where> TEST_CASE_VERSION = null</where>
+		</update>
+		<update tableName="us_test_case">
+			<column name="test_case_version" value="0" />
+			<where> test_case_version = null</where>
+		</update>
+
+	</changeSet>
+
+</databaseChangeLog>
+

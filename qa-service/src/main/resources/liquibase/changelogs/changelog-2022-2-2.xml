@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+	<changeSet id="10508649: PTS QA US_TEST_STATE Table no more used" author="ZSE">
+		<dropTable tableName="US_TEST_STATE" cascadeConstraints="true" />
+	</changeSet>
+
+	<changeSet id="10508992: Allow decimal number in estimated effort" author="ZSE">
+		<modifyDataType tableName="TEST_RUN" columnName="ESTIMATED_EFFORT" newDataType="numeric(9,2)"/>
+		<modifyDataType tableName="LIBRARY_TEST_CASE" columnName="EXECUTION_ESTIMATION_TIME" newDataType="numeric(9,2)"/>
+		<modifyDataType tableName="LIBRARY_TEST_CASE" columnName="EFFORT" newDataType="numeric(9,2)"/>
+		<modifyDataType tableName="LIBRARY_TEST_SUITE" columnName="ESTIMATED_EFFORT" newDataType="numeric(9,2)"/>
+		<modifyDataType tableName="TEST" columnName="EXECUTION_ESTIMATION_TIME" newDataType="numeric(9,2)"/>
+		<modifyDataType tableName="TEST" columnName="EFFORT" newDataType="numeric(9,2)"/>
+		<modifyDataType tableName="US_TEST_CASE" columnName="EXECUTION_ESTIMATION_TIME" newDataType="numeric(9,2)"/>
+		<modifyDataType tableName="US_TEST_CASE" columnName="EFFORT" newDataType="numeric(9,2)"/>
+	</changeSet>
+	<changeSet id="folder external ref id " author="DEV team">
+		<addColumn tableName="folder">
+			<column name="FOLDER_EX_REF_ID" type="BIGINT">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="test case version" author="DEV team">
+		<addColumn tableName="LIBRARY_TEST_CASE">
+			<column name="test_case_version" type="BIGINT">
+			</column>
+		</addColumn>
+	</changeSet>
+</databaseChangeLog>
+

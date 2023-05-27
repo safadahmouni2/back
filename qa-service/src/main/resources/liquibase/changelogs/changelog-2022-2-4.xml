@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+	<changeSet id="10512147: add sprint id to Problem"
+		author="PTS_DevTeam">
+		<addColumn tableName="Problem">
+			<column name="sprint_id" type="BIGINT(19)"
+				defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+		<update tableName="Problem">
+			<column name="sprint_id" value="-1" />
+			<where>sprint_id = null</where>
+		</update>
+	</changeSet>
+
+	<changeSet id="10512147: add sprint id to Ticket"
+		author="PTS_DevTeam">
+		<addColumn tableName="Ticket">
+			<column name="sprint_id" type="BIGINT(19)"
+				defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+		<update tableName="Ticket">
+			<column name="sprint_id" value="-1" />
+			<where>sprint_id = null</where>
+		</update>
+	</changeSet>
+	
+	<changeSet id="10512147: add sprint id to Install"
+		author="PTS_DevTeam">
+		<addColumn tableName="Install">
+			<column name="sprint_id" type="BIGINT(19)"
+				defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+		<update tableName="Install">
+			<column name="sprint_id" value="-1" />
+			<where>sprint_id = null</where>
+		</update>
+	</changeSet>
+
+    <changeSet id="10541527 add envId to testRun"
+		author="PTS_DevTeam">
+		<addColumn tableName="TEST_RUN">
+			<column name="environment_id" type="BIGINT(19)"
+				defaultValue="0">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+	</changeSet>
+	
+</databaseChangeLog>
+

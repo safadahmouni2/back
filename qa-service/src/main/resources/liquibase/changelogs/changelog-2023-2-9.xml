@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+	<changeSet
+		id="Requirement Nr:10565649 add responsible column to the test run table "
+		author="PTS_DevTeam">
+		<addColumn tableName="test_run">
+			<column name="responsible" type="VARCHAR(255)"></column>
+		</addColumn>
+
+	</changeSet>
+	
+	<changeSet id="delete constraint null for library test case id for table test_step" author="PTS_DevTeam">
+        <dropNotNullConstraint tableName="test_step" columnName="test_case_library_id" columnDataType="BIGINT(19)"/>
+     </changeSet>
+     
+     <changeSet id="delete constraint null for library test case id for table test" author="PTS_DevTeam">
+        <dropNotNullConstraint tableName="test" columnName="test_case_library_id" columnDataType="BIGINT(19)"/>
+     </changeSet>
+     
+   <changeSet id="delete constraint null for library test case id for table usTestCase" author="PTS_DevTeam">
+        <dropNotNullConstraint tableName="us_test_case" columnName="test_case_library_id" columnDataType="BIGINT(19)"/>
+     </changeSet>
+ 
+
+</databaseChangeLog>

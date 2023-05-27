@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+	<changeSet author="PTS_DevTeam"
+		id="Create-Table-test-case-change-request">
+		<createTable tableName="test_case_change_request">
+			<column name="id" type="INT(10)" autoIncrement="true"
+				incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_test_case_change_request_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_id" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_case_library_id" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="product_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="sprint_id" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="state" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam"
+		id="Requirement Nr:10551866 Create test case changes">
+		<createTable tableName="test_case_changes">
+			<column name="id" type="BIGINT(19)" autoIncrement="true"
+				incrementBy="1">
+				<constraints primaryKey="true" primaryKeyName="PK_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_case_change_request_id" type="INT(10)">
+				<constraints nullable="false" />
+			</column>
+			<column name="test_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+			<column name="test_case_library_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+			<column name="category" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="execution_estimation_time" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="pre_condition" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="short_description" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="state" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="PTS_DevTeam"
+		id="Requirement Nr:10551866 Create Table test step changes">
+		<createTable tableName="test_step_changes">
+			<column name="id" type="BIGINT(19)" autoIncrement="true"
+				incrementBy="1">
+				<constraints primaryKey="true"
+					primaryKeyName="PK_test_step_id" />
+			</column>
+			<column name="created" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="creator" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="modified" type="DATETIME">
+				<constraints nullable="true" />
+			</column>
+			<column name="modifier" type="VARCHAR(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_case_change_request_id" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_case_library_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+			<column name="test_step_library_id" type="BIGINT(19)">
+				<constraints nullable="false" />
+			</column>
+			<column name="test_case_changes_id" type="BIGINT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="expected_result" type="LONGTEXT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="step_description" type="LONGTEXT(19)">
+				<constraints nullable="true" />
+			</column>
+			<column name="step_order" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+			<column name="test_step_state" type="INT(10)">
+				<constraints nullable="true" />
+			</column>
+		</createTable>
+	</changeSet>
+	<changeSet
+		id="Requirement Nr: 10553887: test step change request manager"
+		author="PTS_DevTeam">
+		<update tableName="test_step">
+			<column name="test_step_library_id" value="0" />
+			<where> test_step_library_id = null</where>
+		</update>
+	</changeSet>
+
+	<changeSet
+		id="Problem Nr: 10555458: correct test step library id value in test step changes"
+		author="PTS_DevTeam">
+		<update tableName="test_step">
+			<column name="test_step_library_id" value="null" />
+			<where> test_step_library_id = 0</where>
+		</update>
+		
+		<dropNotNullConstraint
+			columnDataType="BIGINT(19)" columnName="test_step_library_id"
+			tableName="test_step_changes" />
+			
+		<update tableName="test_step_changes">
+			<column name="test_step_library_id" value="null" />
+			<where> test_step_library_id = 0</where>
+		</update>
+		
+	</changeSet>
+
+</databaseChangeLog>
+
